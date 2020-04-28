@@ -21,7 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import <yoga/Yoga.h>
 #import <React/RCTRootView.h>
 #import <React/RCTShadowView.h>
 #import "VRTView.h"

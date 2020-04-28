@@ -24,7 +24,7 @@
 //  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <React/RCTUIManager.h>
+#import "React/RCTUIManager.h"
 #import <React/RCTUIManagerUtils.h>
 #import "VRTScene.h"
 #import "VRTSceneModule.h"

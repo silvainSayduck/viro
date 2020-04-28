@@ -115,8 +115,6 @@
 		131E1E6620B89A560075D8E0 /* VRTControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0D4CA1DFA3D9B0032AB99 /* VRTControl.mm */; };
 		131E1E6820B89A560075D8E0 /* ViroKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFCC4F520056B1000AD8B8D /* ViroKit.framework */; };
 		13244E7420CF3FC800DF612B /* libViroReact_static_lib.a in Copy Files */ = {isa = PBXBuildFile; fileRef = 1385B29C20CA091C00C3B6CE /* libViroReact_static_lib.a */; };
-		133FE28B206EE35300FB6F34 /* VRTVRSceneNavigatorManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 133FE28A206EE35300FB6F34 /* VRTVRSceneNavigatorManager.mm */; };
-		133FE28E206EE4FD00FB6F34 /* VRTVRSceneNavigator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 133FE28D206EE4FD00FB6F34 /* VRTVRSceneNavigator.mm */; };
 		137E9D821F50E8C1008238E5 /* VRTPhotoLibraryAsyncLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E9D801F50E8C0008238E5 /* VRTPhotoLibraryAsyncLoader.m */; };
 		1385B1CD20CA091C00C3B6CE /* VRTPortalScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF00641F37ACCC006AE4B1 /* VRTPortalScene.mm */; };
 		1385B1CE20CA091C00C3B6CE /* VRTCameraManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0D4861DFA15880032AB99 /* VRTCameraManager.h */; };
@@ -1945,7 +1943,6 @@
 				8BE0D4AA1DFA15880032AB99 /* VRTImageManager.mm in Sources */,
 				8BE0D49C1DFA15880032AB99 /* VRTAnimatedComponentManager.mm in Sources */,
 				8A04D51B2024F7AA00FD5F68 /* VRTARImageMarker.mm in Sources */,
-				133FE28E206EE4FD00FB6F34 /* VRTVRSceneNavigator.mm in Sources */,
 				8A0524391EF0A4B900A02361 /* VRTARSceneManager.mm in Sources */,
 				8AEFA2251EF3175C006851B7 /* VRTARPlaneManager.mm in Sources */,
 				8BE0D50F1DFA3D9B0032AB99 /* VRTSphere.mm in Sources */,
@@ -2002,7 +1999,6 @@
 				8BE0D4A91DFA15880032AB99 /* VRTFlexViewManager.mm in Sources */,
 				8BE0D5251DFA3DEA0032AB99 /* VRTImageAsyncLoader.m in Sources */,
 				8FD1D4B91E3A484000EE2859 /* VRTCameraModule.mm in Sources */,
-				133FE28B206EE35300FB6F34 /* VRTVRSceneNavigatorManager.mm in Sources */,
 				8BE0D4F71DFA3D9B0032AB99 /* VRT360Video.mm in Sources */,
 				8A2DA3C71F9438A7001FC3BA /* VRTARUtils.m in Sources */,
 				8BE0D5091DFA3D9B0032AB99 /* VRTScene.mm in Sources */,

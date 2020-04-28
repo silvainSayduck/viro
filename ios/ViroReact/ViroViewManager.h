@@ -22,10 +22,6 @@
 #import <UIKit/UIKit.h>
 
 
-#import <React/RCTBridgeModule.h>
-#import <React/RCTEventDispatcher.h>
-#import <React/RCTViewManager.h>
-#import <React/RCTConvert.h>
 #import <React/RCTLog.h>
 
 @class RCTBridge;

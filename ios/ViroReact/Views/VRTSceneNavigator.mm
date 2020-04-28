@@ -44,7 +44,6 @@
 
 @implementation VRTSceneNavigator {
     id <VROView> _vroView;
-    VROViewControllerGVR *_gvrController;
 }
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge {
@@ -65,69 +64,6 @@
  this (the double-viewport issue). Return YES if we created a new _vroView, NO if
  one already exists and the method was a no-op.
  */
-- (BOOL)initVRView {
-    if (_vroView != nil) {
-        return NO;
-    }
-    VRORendererConfiguration config;
-    _gvrController = [[VROViewControllerGVR alloc] initWithConfig:config];
-    _gvrController.forceLandscape = _vrModeEnabled;
-    _vroView = (id<VROView>) _gvrController.view;
-    
-    // Load materials; must be done each time we have a new context (e.g. after
-    // the EGL context is created by the VROViewGVR
-    VRTMaterialManager *materialManager = [self.bridge materialManager];
-    [materialManager reloadMaterials];
-    VROViewGVR *viewCardboard = (VROViewGVR *) _gvrController.view;
-    [viewCardboard setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    _vroView.renderDelegate = self;
-    
-    [self setFrame:[UIScreen mainScreen].bounds];
-    [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    
-    [self addSubview:viewCardboard];
-    self.currentViews = [[NSMutableArray alloc] init];
-    [self.bridge.perfMonitor setView:_vroView];
-    
-    return YES;
-}
-
-- (void)setVrModeEnabled:(BOOL)enabled {
-    _vrModeEnabled = enabled;
-    [self initVRView];
-    [_vroView setVrMode:_vrModeEnabled];
-}
-
-- (void)recenterTracking {
-    [self initVRView];
-    VROViewGVR *cardboardView = _vroView;
-    [cardboardView recenterTracking];
-}
-
-- (UIView *)rootVROView {
-    [self initVRView];
-    return (UIView *)_vroView;
-}
-
-//VROComponent overrides...
-- (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex {
-    RCTAssert([subview isKindOfClass:[VRTScene class]], @"VRTSceneNavigator only accepts VRTScene subviews");
-    VRTScene *sceneView = (VRTScene *)subview;
-    BOOL isVRViewInit = [self initVRView];
-    //if initVRView ran then re apply materials.
-    if (isVRViewInit == YES) {
-        [self applyMaterialsToSceneChildren:sceneView];
-    }
-    
-    [sceneView setView:_vroView];
-    [self.currentViews insertObject:sceneView atIndex:atIndex];
-    
-    if (self.currentSceneIndex == atIndex) {
-        [self setSceneView:sceneView];
-        [(VROViewGVR *)_vroView setPaused:NO];
-    }
-    [super insertReactSubview:subview atIndex:atIndex];
-}
 
 -(void)setCurrentSceneIndex:(NSInteger)index {
     int currentViewsLength = (int)[_currentViews count];
@@ -201,51 +137,6 @@
         }
     }
 }
-
-- (void)removeFromSuperview {
-    [self parentDidDisappear];
-    [super removeFromSuperview];
-    
-    /*
-     We need to always ensure that React's root view is showing when we
-     are deallocating Viro and our renderer. This is because GVR does not
-     perform the proper cleanup on its windows: VIRO-1067
-     */
-    if (RCTIsMainQueue()){
-        NSArray *windowArray = [UIApplication sharedApplication].windows;
-        if (windowArray == nil || [windowArray count] == 0) {
-            return;
-        }
-        
-        /*
-         Search the top level rootView controllers and their children to see if their views are
-         RCTRootView. If so, then make that root view visible. This is a hack that
-         removes GVR's frozen frame referenced in VIRO-1067 during shutdown.
-         */
-        for (int i = 0; i < [windowArray count]; i ++) {
-            UIWindow *window = [windowArray objectAtIndex:i];
-            if (window != nil && window.rootViewController != nil) {
-                if (window.rootViewController.view != nil && [self findRCTRootView:window.rootViewController] != nil) {
-                    [window makeKeyAndVisible];
-                    return;
-                }
-            }
-        }
-        
-        /*
-         If we are still here we didn't make any window visible over GVR. Make first one with a valid
-         rootViewController visible.
-         */
-        for (int i = 0; i < [windowArray count]; i++) {
-            UIWindow *window = [windowArray objectAtIndex:i];
-            if (window != nil && window.rootViewController != nil) {
-                [window makeKeyAndVisible];
-                return;
-            }
-        }
-    }
-}
-
 /*
  Unproject the given screen coordinates into world coordinates. The given screen coordinate vector must
  contain a Z element in the range [0,1], where 0 is the near clipping plane and 1 the far clipping plane.
