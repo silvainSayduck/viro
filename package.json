@@ -12,7 +12,7 @@
   },
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.59.10"
   },
   "files": [
     "components",
@@ -28,6 +28,6 @@
   "dependencies": {
     "prop-types": "^15.5.10",
     "react": "^16.9.0",
-    "react-native": "^0.61.5"
+    "react-native": "^0.59.10"
   }
 }
